@@ -5,11 +5,19 @@
  */
 package visao;
 
+import controle.ConexaoBD;
+import controle.ControleMedico;
+import modelo.ModeloMedico;
+
 /**
  *
  * @author xavie
  */
 public class FormMedico extends javax.swing.JFrame {
+    
+    ModeloMedico mod = new ModeloMedico();
+    ControleMedico control = new ControleMedico();
+    ConexaoBD conex = new ConexaoBD();
 
     /**
      * Creates new form FormMedico
@@ -54,24 +62,48 @@ public class FormMedico extends javax.swing.JFrame {
 
         jLabelCRM.setText("CRM");
 
-        jComboBoxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dermatologia", "Endocrinologia", "Cardiologia", "Psiquiatria" }));
+        jComboBoxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dermatologia", "Endocrinologia", "Cardiologia", "Psiquiatria", "Médico de Família", "Clínico Geral", "Cirurgia" }));
+        jComboBoxEspecialidade.setEnabled(false);
         jComboBoxEspecialidade.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 jComboBoxEspecialidadeComponentResized(evt);
             }
         });
+        jComboBoxEspecialidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxEspecialidadeActionPerformed(evt);
+            }
+        });
 
         jLabelEspecialidade.setText("Especialidade");
 
+        jTextFieldCRM.setEnabled(false);
+
+        jTextFieldNome.setEnabled(false);
+
         jButtonNovo.setText("Novo");
+        jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNovoActionPerformed(evt);
+            }
+        });
 
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setEnabled(false);
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setEnabled(false);
 
         Editar.setText("Editar");
+        Editar.setEnabled(false);
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.setEnabled(false);
 
         jTableMedico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,12 +208,10 @@ public class FormMedico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelFormMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelFormMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTituloCadastroMedicos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addComponent(jLabelTituloCadastroMedicos)
-                .addContainerGap(200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,6 +230,30 @@ public class FormMedico extends javax.swing.JFrame {
     private void jComboBoxEspecialidadeComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jComboBoxEspecialidadeComponentResized
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxEspecialidadeComponentResized
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        mod.setNome(jTextFieldNome.getText()); //Modelo está setando dentro de "Nome" o valor que o usuário digitou no campo "Nome"
+        mod.setEspecialidade((String)jComboBoxEspecialidade.getSelectedItem()); // Modelo está setando como String dentro de "Especialidade" o valor que o usuário selecionou no campo "Especialidade"
+        mod.setCrm(Integer.parseInt(jTextFieldCRM.getText())); // Modelo está setando como Integer dentro de "CRM" o valor que o usuário digitou no campo "CRM"
+        control.salvar(mod);
+        jTextFieldNome.setText("");
+        jTextFieldCRM.setText("");
+        jTextFieldNome.setEnabled(false);
+        jTextFieldCRM.setEnabled(false);
+        jComboBoxEspecialidade.setEnabled(false);
+        jButtonSalvar.setEnabled(false);
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jComboBoxEspecialidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEspecialidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxEspecialidadeActionPerformed
+
+    private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
+        jTextFieldNome.setEnabled(true);
+        jTextFieldCRM.setEnabled(true);
+        jComboBoxEspecialidade.setEnabled(true);
+        jButtonSalvar.setEnabled(true);
+    }//GEN-LAST:event_jButtonNovoActionPerformed
 
     /**
      * @param args the command line arguments

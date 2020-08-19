@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author xavie
  */
 public class ConexaoBD {
+
     public Statement stm; //Realiza a pesquisa no BD
     public ResultSet rs; //Armazena o resultado da pesquisa
     private String driver = "org.postgresql.Driver"; //Identifica o serviço (padrão)
@@ -22,26 +23,26 @@ public class ConexaoBD {
     private String usuario = "postgres"; //Usuário cadastrado
     private String senha = "771882"; //Senha cadastrada
     public Connection con;
-    
-    public void conexao(){ //Método responsável por realizar a conexão com a base de dados
+
+    public void conexao() { //Método responsável por realizar a conexão com a base de dados
         try {
             System.setProperty("jdcb.Drivers", driver); //Responsável por setar as propriedades do driver de conexão
-            con=DriverManager.getConnection(caminho, usuario, senha);
-            JOptionPane.showMessageDialog(null, "Conexão realizada com sucesso.");
+            con = DriverManager.getConnection(caminho, usuario, senha);
+            //JOptionPane.showMessageDialog(null, "Conexão realizada com sucesso.");
         } catch (SQLException ex) {
             //Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro ao se conectar com o banco de dados: \n" +ex.getMessage());
-        }
-    }   
-    
-    public void desconecta(){ //Método responsável por realizar a desconexão com a base de dados
-        try {
-            con.close();
-            JOptionPane.showMessageDialog(null, "BD desconectado com sucesso.");
-        } catch (SQLException ex) {
-            //Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro ao desconectar BD: \n" +ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao se conectar com o banco de dados: \n" + ex.getMessage());
         }
     }
-    
+
+    public void desconexao() { //Método responsável por realizar a desconexão com a base de dados
+        try {
+            con.close();
+            //JOptionPane.showMessageDialog(null, "BD desconectado com sucesso.");
+        } catch (SQLException ex) {
+            //Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao desconectar BD: \n" + ex.getMessage());
+        }
+    }
+
 }
